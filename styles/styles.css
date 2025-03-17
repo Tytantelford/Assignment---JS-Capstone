@@ -1,0 +1,97 @@
+html,
+body {
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #d0d0d0;
+}
+
+.main-wrapper {
+  display: flex;
+  background-color: rgb(170, 41, 41);
+  align-items: center;
+  justify-content: center;
+  height: 1000px;
+  flex-direction: column;
+}
+.main-wrapper .title {
+  align-items: center;
+  color: #ffffff;
+  font-size: 80px;
+  font-family: "Harry Potter", sans-serif;
+}
+.main-wrapper .button button {
+  font-size: 20px;
+  font-weight: bolder;
+  color: #d3a625;
+  width: 150px;
+  height: 50px;
+  border-width: 8px;
+  background-color: white;
+}
+.main-wrapper .button button:hover {
+  cursor: pointer;
+}
+.main-wrapper .icon-container {
+  display: none;
+  justify-content: center;
+  align-items: center;
+  height: 100px;
+}
+
+.left-side {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 20%;
+  height: 100vh;
+  background-color: gray;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-direction: column;
+  padding-top: 20px;
+}
+.left-side .header-left-side {
+  color: black;
+  font-size: 34px;
+  text-align: center;
+  text-decoration: underline;
+  font-family: "Iceberg", sans-serif;
+}
+.left-side .houses {
+  display: flex;
+  flex-direction: column;
+  margin-top: 30px;
+}
+.left-side .houses .add {
+  color: green;
+  background-color: black;
+}
+.left-side .houses .subtract {
+  color: red;
+  background-color: black;
+}
+.left-side .houses span {
+  font-size: 20px;
+  font-family: "Harry Potter", sans-serif;
+}
+.left-side .houses p {
+  align-items: center;
+}
+.left-side .houses .gryffindor {
+  margin-top: 100px;
+  color: #ae0001;
+}
+.left-side .houses .ravenclaw {
+  margin-top: 100px;
+  color: #222f5b;
+}
+.left-side .houses .hufflepuff {
+  margin-top: 100px;
+  color: #ecb939;
+}
+.left-side .houses .slytherin {
+  margin-top: 100px;
+  color: #2a623d;
+}/*# sourceMappingURL=styles.css.map */
