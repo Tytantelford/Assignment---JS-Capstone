@@ -36,7 +36,15 @@ body {
   display: none;
   justify-content: center;
   align-items: center;
-  height: 100px;
+}
+.main-wrapper .icon-container i.fa-solid.fa-hat-wizard {
+  font-size: 100px;
+}
+.main-wrapper .icon-container .testing {
+  display: none;
+  color: blue;
+  background-color: blue;
+  width: 20px;
 }
 
 .left-side {
