@@ -45,16 +45,22 @@ document.addEventListener("DOMContentLoaded", () => {
 
       // Set a timeout for how long the loading icon should appear (e.g., 3 seconds)
       setTimeout(() => {
+        console.log("timetest");
         // Hide the loading icon after 3 seconds
         iconContainer.style.display = "none";
+        console.log("1test");
 
         // Show the testing button after the icon disappears
+        console.log("Testing button:", testingButton);
+
         testingButton.style.display = "inline-block";
+        console.log("please");
       }, 3000); // 3000ms = 3 seconds
     });
   }
 });
 
+//////ADD AND SUBTRACT POINTS
 document.addEventListener("DOMContentLoaded", () => {
   // Waits for the entire HTML document to be fully loaded before running the code
   const addButtons = document.querySelectorAll(".add"); // Selects all elements with the class "add" (the plus buttons)

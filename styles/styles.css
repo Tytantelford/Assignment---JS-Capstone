@@ -39,12 +39,13 @@ body {
 }
 .main-wrapper .icon-container i.fa-solid.fa-hat-wizard {
   font-size: 100px;
+  color: #493716;
 }
 .main-wrapper .icon-container .testing {
   display: none;
-  color: blue;
+  width: 100px;
+  height: 100px;
   background-color: blue;
-  width: 20px;
 }
 
 .left-side {
