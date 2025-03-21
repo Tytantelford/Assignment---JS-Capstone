@@ -39,13 +39,20 @@ body {
 }
 .main-wrapper .icon-container i.fa-solid.fa-hat-wizard {
   font-size: 100px;
-  color: #493716;
+  color: #ecb939;
 }
-.main-wrapper .icon-container .testing {
+.main-wrapper .testing {
   display: none;
   width: 100px;
-  height: 100px;
-  background-color: blue;
+  height: 80px;
+  border: solid 5px #ecb939;
+  background-color: black;
+  color: white;
+  font-family: "Iceberg", sans-serif;
+  font-size: 18px;
+}
+.main-wrapper .testing:hover {
+  cursor: pointer;
 }
 
 .left-side {
@@ -53,7 +60,7 @@ body {
   top: 0;
   left: 0;
   width: 20%;
-  height: 100vh;
+  height: 1000px;
   background-color: gray;
   display: flex;
   align-items: center;
@@ -71,7 +78,6 @@ body {
 .left-side .houses {
   display: flex;
   flex-direction: column;
-  margin-top: 30px;
 }
 .left-side .houses .add {
   color: green;

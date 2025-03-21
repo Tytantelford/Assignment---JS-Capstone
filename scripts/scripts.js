@@ -1,24 +1,23 @@
 const count = document.querySelector(".button");
 const clickMe = document.getElementsByClassName("click-me-button");
 
+////GET THE HOUSE NAMES
 document.addEventListener("DOMContentLoaded", () => {
   fetch("https://potterhead-api.vercel.app/api/houses")
     .then((response) => response.json())
     .then((houses) => {
-      console.log(houses); // Check API response in console
-
       const houseElements = document.querySelectorAll(".houses > div");
 
       houseElements.forEach((houseElement) => {
-        const span = houseElement.querySelector("span"); // Select the <span> inside each div
+        const span = houseElement.querySelector("span");
         if (span) {
-          const houseClass = houseElement.classList[0]; // Get the class name (e.g., "gryffindor")
+          const houseClass = houseElement.classList[0];
           const houseName = houses.find(
             (house) => house.toLowerCase() === houseClass
           );
 
           if (houseName) {
-            span.textContent = houseName; // Update the span with the house name
+            span.textContent = houseName;
           }
         }
       });
@@ -33,63 +32,87 @@ document.addEventListener("DOMContentLoaded", () => {
 
   if (button) {
     button.addEventListener("click", () => {
-      // Remove the title
       const title = document.querySelector(".title");
-      if (title) title.remove();
 
-      // Hide the "Click me" button
+      if (title) title.remove();
       button.remove();
 
-      // Show the loading icon (wizard hat)
-      iconContainer.style.display = "flex"; // Make the icon visible
+      iconContainer.style.display = "flex";
 
-      // Set a timeout for how long the loading icon should appear (e.g., 3 seconds)
       setTimeout(() => {
-        console.log("timetest");
-        // Hide the loading icon after 3 seconds
         iconContainer.style.display = "none";
-        console.log("1test");
-
-        // Show the testing button after the icon disappears
-        console.log("Testing button:", testingButton);
-
-        testingButton.style.display = "inline-block";
-        console.log("please");
-      }, 3000); // 3000ms = 3 seconds
+        testingButton.style.display = "block";
+      }, 2000);
     });
   }
 });
 
-//////ADD AND SUBTRACT POINTS
 document.addEventListener("DOMContentLoaded", () => {
-  // Waits for the entire HTML document to be fully loaded before running the code
-  const addButtons = document.querySelectorAll(".add"); // Selects all elements with the class "add" (the plus buttons)
-  const subtractButtons = document.querySelectorAll(".subtract"); // Selects all elements with the class "subtract" (the minus buttons)
+  const houses = ["gryffindor", "ravenclaw", "hufflepuff", "slytherin"];
 
-  addButtons.forEach((button) => {
-    // Loops through each "add" button
-    button.addEventListener("click", (event) => {
-      // Adds an event listener for the 'click' event on each button
-      const house = event.target.closest("div"); // Finds the closest ancestor `div` to the clicked button (this will be the house div)
-      const pointsDisplay = house.querySelector(".points"); // Finds the child element with the class "points" inside the house div (where the points are displayed)
-      let currentPoints = parseInt(pointsDisplay.textContent); // Gets the current points, converting the text to an integer using `parseInt()`
-      currentPoints++; // Increments the current points by 1 (adds one point)
-      pointsDisplay.textContent = currentPoints; // Updates the points displayed in the "points" element with the new value
+  houses.forEach((house) => {
+    const addButton = document.querySelector(`.${house} .add`);
+    const subtractButton = document.querySelector(`.${house} .subtract`);
+    const weightElement = document.querySelector(`.${house} .weight`);
+
+    addButton.addEventListener("click", () => {
+      let currentWeight = parseInt(weightElement.textContent);
+      weightElement.textContent = currentWeight + 1;
     });
-  });
 
-  subtractButtons.forEach((button) => {
-    // Loops through each "subtract" button
-    button.addEventListener("click", (event) => {
-      // Adds an event listener for the 'click' event on each button
-      const house = event.target.closest("div"); // Finds the closest ancestor `div` to the clicked button (this will be the house div)
-      const pointsDisplay = house.querySelector(".points"); // Finds the child element with the class "points" inside the house div (where the points are displayed)
-      let currentPoints = parseInt(pointsDisplay.textContent); // Gets the current points, converting the text to an integer using `parseInt()`
-      if (currentPoints > 0) {
-        // Checks if the current points are greater than 0 (so points don't go negative)
-        currentPoints--; // Decreases the current points by 1 (subtracts one point)
-        pointsDisplay.textContent = currentPoints; // Updates the points displayed in the "points" element with the new value
+    subtractButton.addEventListener("click", () => {
+      let currentWeight = parseInt(weightElement.textContent);
+      if (currentWeight > 0) {
+        weightElement.textContent = currentWeight - 1;
       }
     });
   });
+
+  const testingButton = document.getElementsByClassName("testing")[0];
+  const randomHouseDisplay = document.getElementsByClassName("random-house")[0];
+
+  if (testingButton) {
+    testingButton.addEventListener("click", () => {
+      const houseWeights = houses.map((house) => {
+        return {
+          house,
+          weight: parseInt(
+            document.querySelector(`.${house} .weight`).textContent
+          ),
+        };
+      });
+
+      const validHouses = houseWeights.filter((h) => h.weight > 0);
+      const totalWeight = validHouses.reduce((acc, h) => acc + h.weight, 0);
+      const randomNum = Math.floor(Math.random() * totalWeight);
+
+      let weightSum = 0;
+      let selectedHouse = null;
+      for (let house of validHouses) {
+        weightSum += house.weight;
+        if (randomNum < weightSum) {
+          selectedHouse = house.house;
+          break;
+        }
+      }
+
+      randomHouseDisplay.textContent = `${selectedHouse}`;
+      randomHouseDisplay.style.fontSize = "30px";
+      randomHouseDisplay.style.fontFamily = "Harry Potter, sans-serif";
+      randomHouseDisplay.style.color = "#ecb939";
+      document.querySelectorAll(".houses > div span").forEach((span) => {
+        span.style.textDecoration = "none";
+      });
+
+      document.querySelectorAll(".houses > div span").forEach((span) => {
+        span.style.backgroundColor = "";
+      });
+      const selectedHouseElement = document.querySelector(
+        `.${selectedHouse} span`
+      );
+      if (selectedHouseElement) {
+        selectedHouseElement.style.backgroundColor = "#d3a625";
+      }
+    });
+  }
 });
