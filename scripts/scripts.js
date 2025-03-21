@@ -1,30 +1,29 @@
 const count = document.querySelector(".button");
 const clickMe = document.getElementsByClassName("click-me-button");
 
-////GET THE HOUSE NAMES
+//fetch hogwarts house names
 document.addEventListener("DOMContentLoaded", () => {
   fetch("https://potterhead-api.vercel.app/api/houses")
-    .then((response) => response.json())
-    .then((houses) => {
+    .then((apiResponse) => apiResponse.json())
+    .then((housesArray) => {
       const houseElements = document.querySelectorAll(".houses > div");
 
       houseElements.forEach((houseElement) => {
-        const span = houseElement.querySelector("span");
-        if (span) {
-          const houseClass = houseElement.classList[0];
-          const houseName = houses.find(
-            (house) => house.toLowerCase() === houseClass
-          );
-
+        const htmlSpan = houseElement.querySelector("span");
+        if (htmlSpan) {
+          const individualHouseClass = houseElement.classList[0];
+          const houseName = housesArray.find(
+            (house) => house.toLowerCase() === individualHouseClass
+          ); //houserArray [0]=house array from api. make sure that matches the individualHouseClass which is from the html
           if (houseName) {
-            span.textContent = houseName;
-          }
+            htmlSpan.textContent = houseName;
+          } // textContent it to html
         }
       });
-    })
-    .catch((error) => console.error(error));
+    });
 });
 
+//remove button after being clicked, loading icon appear
 document.addEventListener("DOMContentLoaded", () => {
   const button = document.querySelector(".click-me-button");
   const iconContainer = document.querySelector(".icon-container");
@@ -47,23 +46,24 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 });
 
+// add and subtract buttons & weight
 document.addEventListener("DOMContentLoaded", () => {
   const houses = ["gryffindor", "ravenclaw", "hufflepuff", "slytherin"];
 
   houses.forEach((house) => {
     const addButton = document.querySelector(`.${house} .add`);
     const subtractButton = document.querySelector(`.${house} .subtract`);
-    const weightElement = document.querySelector(`.${house} .weight`);
+    const weightElementHTML = document.querySelector(`.${house} .weight`);
 
     addButton.addEventListener("click", () => {
-      let currentWeight = parseInt(weightElement.textContent);
-      weightElement.textContent = currentWeight + 1;
+      let currentWeight = parseInt(weightElementHTML.textContent);
+      weightElementHTML.textContent = currentWeight + 1;
     });
 
     subtractButton.addEventListener("click", () => {
-      let currentWeight = parseInt(weightElement.textContent);
+      let currentWeight = parseInt(weightElementHTML.textContent);
       if (currentWeight > 0) {
-        weightElement.textContent = currentWeight - 1;
+        weightElementHTML.textContent = currentWeight - 1;
       }
     });
   });
@@ -73,7 +73,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
   if (testingButton) {
     testingButton.addEventListener("click", () => {
-      const houseWeights = houses.map((house) => {
+      const houseAndWeights = houses.map((house) => {
+        // house = [0]current item in array from .map
         return {
           house,
           weight: parseInt(
@@ -82,20 +83,27 @@ document.addEventListener("DOMContentLoaded", () => {
         };
       });
 
-      const validHouses = houseWeights.filter((h) => h.weight > 0);
-      const totalWeight = validHouses.reduce((acc, h) => acc + h.weight, 0);
+      const nonZeroWeightHouses = houseAndWeights.filter(
+        // .filter Loop through array, only keep items that meet condition of function
+        (houseData) => houseData.weight > 0
+      );
+      const totalWeight = nonZeroWeightHouses.reduce(
+        // .reduce combine all elements in array to single value. adding accumulatedWeight & houseData.weight
+        (accumulatedWeight, houseData) => accumulatedWeight + houseData.weight,
+        0
+      );
       const randomNum = Math.floor(Math.random() * totalWeight);
 
       let weightSum = 0;
       let selectedHouse = null;
-      for (let house of validHouses) {
+      for (let house of nonZeroWeightHouses) {
         weightSum += house.weight;
         if (randomNum < weightSum) {
           selectedHouse = house.house;
           break;
         }
       }
-
+      // house name appears
       randomHouseDisplay.textContent = `${selectedHouse}`;
       randomHouseDisplay.style.fontSize = "30px";
       randomHouseDisplay.style.fontFamily = "Harry Potter, sans-serif";
